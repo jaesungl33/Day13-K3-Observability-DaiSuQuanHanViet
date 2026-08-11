@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import json
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from structlog.contextvars import bind_contextvars
 
 # Load credentials before Langfuse client initialization.
@@ -17,7 +20,7 @@ if os.getenv("LANGFUSE_HOST") and not os.getenv("LANGFUSE_BASE_URL"):
 
 from .agent import LabAgent
 from .incidents import disable, enable, status
-from .logging_config import configure_logging, get_logger
+from .logging_config import LOG_PATH, configure_logging, get_logger
 from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
@@ -27,6 +30,7 @@ from .tracing import flush_tracing, tracing_enabled
 configure_logging()
 log = get_logger()
 agent = LabAgent()
+FRONTEND_DIR = Path(__file__).resolve().parents[1] / "frontend"
 
 
 @asynccontextmanager
@@ -44,6 +48,32 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(title="Day 13 Observability Lab", lifespan=lifespan)
 app.add_middleware(CorrelationIdMiddleware)
+if FRONTEND_DIR.exists():
+    app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+
+
+@app.get("/")
+async def demo_home() -> FileResponse:
+    index = FRONTEND_DIR / "index.html"
+    if not index.exists():
+        raise HTTPException(status_code=404, detail="Frontend not found")
+    return FileResponse(index)
+
+
+@app.get("/demo/recent-logs")
+async def recent_logs(limit: int = Query(default=30, ge=1, le=200)) -> dict:
+    if not LOG_PATH.exists():
+        return {"records": []}
+    lines = LOG_PATH.read_text(encoding="utf-8").splitlines()
+    records: list[dict] = []
+    for line in lines[-limit:]:
+        if not line.strip():
+            continue
+        try:
+            records.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return {"records": records}
 
 
 @app.get("/health")

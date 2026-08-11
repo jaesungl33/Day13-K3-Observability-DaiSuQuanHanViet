@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đại Sứ Quán Hàn Việt · Day 13 Observability</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand-lockup">
+      <span class="seal" aria-hidden="true">韓越</span>
+      <div>
+        <p class="brand">Đại Sứ Quán Hàn Việt</p>
+        <p class="brand-sub">Day 13 · Observability Lab</p>
+      </div>
+    </div>
+    <div class="status-cluster" id="statusCluster">
+      <span class="pill" id="healthPill">API …</span>
+      <span class="pill" id="tracePill">Tracing …</span>
+      <span class="pill muted" id="refreshPill">Refresh 5s</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>Observe every AI request end to end.</h1>
+        <p class="lede">
+          Send a chat turn, watch latency and cost move, then follow the same
+          correlation ID from metrics into traces and logs.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#console">Open live console</a>
+          <a class="btn ghost" href="#investigate">Investigate incident</a>
+        </div>
+      </div>
+      <aside class="hero-signal" aria-label="Live signal">
+        <p class="signal-label">Live P95</p>
+        <p class="signal-value" id="heroP95">—</p>
+        <p class="signal-meta" id="heroMeta">Waiting for traffic</p>
+      </aside>
+    </section>
+
+    <section class="panel-grid" id="metrics" aria-label="Six observability panels">
+      <article class="metric" data-key="latency">
+        <h2>Latency</h2>
+        <p class="unit">ms · SLO P95 ≤ 3000</p>
+        <p class="value" id="mLatency">—</p>
+        <p class="detail" id="mLatencyDetail">P50 / P95 / P99</p>
+        <div class="bar"><span id="mLatencyBar"></span></div>
+      </article>
+      <article class="metric" data-key="traffic">
+        <h2>Traffic</h2>
+        <p class="unit">requests</p>
+        <p class="value" id="mTraffic">—</p>
+        <p class="detail">In-process counter</p>
+      </article>
+      <article class="metric" data-key="errors">
+        <h2>Errors</h2>
+        <p class="unit">breakdown</p>
+        <p class="value" id="mErrors">—</p>
+        <p class="detail" id="mErrorsDetail">No errors</p>
+      </article>
+      <article class="metric" data-key="cost">
+        <h2>Cost</h2>
+        <p class="unit">USD · budget ≤ 2.5</p>
+        <p class="value" id="mCost">—</p>
+        <p class="detail" id="mCostDetail">avg / total</p>
+      </article>
+      <article class="metric" data-key="tokens">
+        <h2>Tokens</h2>
+        <p class="unit">in / out</p>
+        <p class="value" id="mTokens">—</p>
+        <p class="detail" id="mTokensDetail">totals</p>
+      </article>
+      <article class="metric" data-key="quality">
+        <h2>Quality</h2>
+        <p class="unit">score 0–1 · floor ≥ 0.75</p>
+        <p class="value" id="mQuality">—</p>
+        <p class="detail">Heuristic proxy</p>
+      </article>
+    </section>
+
+    <section class="split" id="console">
+      <div class="card console">
+        <div class="card-head">
+          <h2>Live chat console</h2>
+          <p>Hits <code>POST /chat</code> and returns a correlation ID.</p>
+        </div>
+        <form id="chatForm">
+          <div class="form-row">
+            <label>
+              Feature
+              <select name="feature" id="feature">
+                <option value="qa">qa</option>
+                <option value="refund">refund</option>
+                <option value="summary">summary</option>
+              </select>
+            </label>
+            <label>
+              User ID
+              <input name="user_id" id="userId" value="demo-user-01" />
+            </label>
+            <label>
+              Session
+              <input name="session_id" id="sessionId" value="demo-session-01" />
+            </label>
+          </div>
+          <label class="full">
+            Message
+            <textarea name="message" id="message" rows="3" placeholder="What is your refund policy? My email is student@vinuni.edu.vn"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary" id="sendBtn">Send request</button>
+            <button type="button" class="btn ghost" id="samplePiiBtn">Insert PII sample</button>
+          </div>
+        </form>
+        <div class="response" id="chatResponse" hidden>
+          <div class="response-grid">
+            <div>
+              <span class="k">Correlation ID</span>
+              <code id="outCid">—</code>
+            </div>
+            <div>
+              <span class="k">Latency</span>
+              <strong id="outLatency">—</strong>
+            </div>
+            <div>
+              <span class="k">Tokens</span>
+              <strong id="outTokens">—</strong>
+            </div>
+            <div>
+              <span class="k">Cost</span>
+              <strong id="outCost">—</strong>
+            </div>
+            <div>
+              <span class="k">Quality</span>
+              <strong id="outQuality">—</strong>
+            </div>
+          </div>
+          <p class="answer" id="outAnswer"></p>
+        </div>
+      </div>
+
+      <div class="card incidents" id="investigate">
+        <div class="card-head">
+          <h2>Incident controls</h2>
+          <p>Practice scenarios for Metrics → Traces → Logs demos.</p>
+        </div>
+        <ul class="incident-list" id="incidentList">
+          <li>
+            <div>
+              <strong>rag_slow</strong>
+              <span>Retrieval sleeps 2.5s — P95 rises</span>
+            </div>
+            <button type="button" class="btn tiny" data-incident="rag_slow">Enable</button>
+          </li>
+          <li>
+            <div>
+              <strong>tool_fail</strong>
+              <span>Vector store timeout errors</span>
+            </div>
+            <button type="button" class="btn tiny" data-incident="tool_fail">Enable</button>
+          </li>
+          <li>
+            <div>
+              <strong>cost_spike</strong>
+              <span>Output tokens ×4 — cost climbs</span>
+            </div>
+            <button type="button" class="btn tiny" data-incident="cost_spike">Enable</button>
+          </li>
+        </ul>
+        <div class="flow">
+          <h3>Investigation flow</h3>
+          <ol>
+            <li>Watch Latency / Cost panels move.</li>
+            <li>Copy a correlation ID from the console.</li>
+            <li>Match it in recent logs below.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="card history">
+      <div class="card-head">
+        <h2>Recent requests</h2>
+        <p>Browser-side history from this demo session.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Correlation ID</th>
+              <th>Feature</th>
+              <th>Latency</th>
+              <th>Quality</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="6" class="empty">No requests yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card logs">
+      <div class="card-head">
+        <h2>Recent structured logs</h2>
+        <p>Tail of <code>data/logs.jsonl</code> — scrubbed, with correlation IDs.</p>
+      </div>
+      <pre id="logTail" class="log-tail">Loading logs…</pre>
+    </section>
+
+    <section class="team">
+      <h2>Đại Sứ Quán Hàn Việt</h2>
+      <div class="team-grid">
+        <article>
+          <h3>Lee Jae Sung</h3>
+          <p>Tech Lead / Backend · CP1 Logging &amp; PII</p>
+        </article>
+        <article>
+          <h3>Vũ Đức Duy</h3>
+          <p>SRE &amp; Alerts · CP2 Langfuse, SLO, Runbook</p>
+        </article>
+        <article>
+          <h3>Dương Hoàng Lâm</h3>
+          <p>QA &amp; Investigator · CP3 Dashboard &amp; Challenge</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Day 13 Observability · Serve with <code>uvicorn app.main:app --reload --env-file .env</code> then open <code>/</code></p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

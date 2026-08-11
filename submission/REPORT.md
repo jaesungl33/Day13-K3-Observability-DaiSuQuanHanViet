@@ -4,7 +4,7 @@
 
 - Tên nhóm: DaiSuQuanHanViet
 - Repository URL: https://github.com/jaesungl33/Day13-K3-Observability-DaiSuQuanHanViet
-- Commit SHA cuối: _(điền sau khi push)_
+- Commit SHA cuối: 46a7b4685808521dbfcb0284a6702505da7ef731
 - Thành viên và vai trò:
   - Logging & PII / Tracing & Prompt Version / Dashboard, SLO & Alert / Incident, Report & Demo
 

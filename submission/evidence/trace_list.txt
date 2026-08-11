@@ -1,0 +1,20 @@
+Langfuse traces (chat-turn)
+1. a910b1f54ec4227699e01e983807c6d0 | qa | candidate/v2 | req-73038fee | 784ms
+2. 9d0cb651246df3cb623512c10d13e043 | qa | baseline/v1 | req-14a9cb29 | 515ms
+3. b45c6bf17e03d36e9219b3007f30523f | refund | production/v1 | req-d02363d2 | 2684ms
+4. bc3b15916c3dd18342eb2086229d079b | refund | production/v1 | req-13fa36aa | 2659ms
+5. 65f22a9d0e75f96bd0c0f3084d555160 | refund | production/v1 | req-ccfd74c4 | 2653ms
+6. 41ab898ad5e5aaa4b2ff4518a4c9cab3 | refund | production/v1 | req-78a8bbd5 | 2661ms
+7. 7698003408f1ecb29db1fd55ab488f6e | refund | production/v1 | req-9cd840d1 | 2661ms
+8. b41ddb6eb023decea0bba9380a48d425 | qa | production/v1 | req-81f8db74 | 156ms
+9. 514b9a18a3a19fb388fd83d01a383b9a | qa | production/v1 | req-9f53848a | 156ms
+10. 686f908a4ed393786ba50382cb01e07f | qa | production/v1 | req-8223f46b | 153ms
+11. f19706c278cc430335033e487896bfa3 | qa | production/v1 | req-17a17f4f | 156ms
+12. bed4bec2bc950387977f23db4f8bacb6 | qa | production/v1 | req-3a086c60 | 155ms
+13. bfa2ca90b87a6fab446bdb17e56ed761 | summary | production/v1 | req-23151ca6 | 154ms
+14. 0c0e9193123a004cd4327b3e0ca2c483 | qa | production/v1 | req-a5b58215 | 156ms
+15. a4c34557fa3ba7ffd93b3c66c62819e5 | summary | production/v1 | req-c563ed60 | 156ms
+16. 59a08a685e0d5c81f8620d579e2c2438 | qa | production/v1 | req-746cae60 | 153ms
+17. 3e4939e860c4b19a040a11097b27bc64 | qa | production/v1 | req-cce544c0 | 557ms
+
+Total fetched: 17

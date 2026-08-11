@@ -1,0 +1,376 @@
+[
+  {
+    "id": "a910b1f54ec4227699e01e983807c6d0",
+    "name": "chat-turn",
+    "sessionId": "prompt-s-candidate",
+    "latency": 0.786,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "candidate",
+      "prompt_version": 2,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-73038fee",
+      "feature": "qa",
+      "latency_ms": 784
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/a910b1f54ec4227699e01e983807c6d0"
+  },
+  {
+    "id": "9d0cb651246df3cb623512c10d13e043",
+    "name": "chat-turn",
+    "sessionId": "prompt-s-baseline",
+    "latency": 0.518,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "baseline",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-14a9cb29",
+      "feature": "qa",
+      "latency_ms": 515
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/9d0cb651246df3cb623512c10d13e043"
+  },
+  {
+    "id": "b45c6bf17e03d36e9219b3007f30523f",
+    "name": "chat-turn",
+    "sessionId": "k3-challenge-s03",
+    "latency": 2.686,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "refund"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-d02363d2",
+      "feature": "refund",
+      "latency_ms": 2684
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/b45c6bf17e03d36e9219b3007f30523f"
+  },
+  {
+    "id": "bc3b15916c3dd18342eb2086229d079b",
+    "name": "chat-turn",
+    "sessionId": "k3-challenge-s05",
+    "latency": 2.661,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "refund"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-13fa36aa",
+      "feature": "refund",
+      "latency_ms": 2659
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/bc3b15916c3dd18342eb2086229d079b"
+  },
+  {
+    "id": "65f22a9d0e75f96bd0c0f3084d555160",
+    "name": "chat-turn",
+    "sessionId": "k3-challenge-s04",
+    "latency": 2.654,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "refund"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-ccfd74c4",
+      "feature": "refund",
+      "latency_ms": 2653
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/65f22a9d0e75f96bd0c0f3084d555160"
+  },
+  {
+    "id": "41ab898ad5e5aaa4b2ff4518a4c9cab3",
+    "name": "chat-turn",
+    "sessionId": "k3-challenge-s02",
+    "latency": 2.664,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "refund"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-78a8bbd5",
+      "feature": "refund",
+      "latency_ms": 2661
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/41ab898ad5e5aaa4b2ff4518a4c9cab3"
+  },
+  {
+    "id": "7698003408f1ecb29db1fd55ab488f6e",
+    "name": "chat-turn",
+    "sessionId": "k3-challenge-s01",
+    "latency": 2.663,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "refund"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-9cd840d1",
+      "feature": "refund",
+      "latency_ms": 2661
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/7698003408f1ecb29db1fd55ab488f6e"
+  },
+  {
+    "id": "b41ddb6eb023decea0bba9380a48d425",
+    "name": "chat-turn",
+    "sessionId": "s10",
+    "latency": 0.157,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-81f8db74",
+      "feature": "qa",
+      "latency_ms": 156
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/b41ddb6eb023decea0bba9380a48d425"
+  },
+  {
+    "id": "514b9a18a3a19fb388fd83d01a383b9a",
+    "name": "chat-turn",
+    "sessionId": "s09",
+    "latency": 0.158,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-9f53848a",
+      "feature": "qa",
+      "latency_ms": 156
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/514b9a18a3a19fb388fd83d01a383b9a"
+  },
+  {
+    "id": "686f908a4ed393786ba50382cb01e07f",
+    "name": "chat-turn",
+    "sessionId": "s08",
+    "latency": 0.154,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-8223f46b",
+      "feature": "qa",
+      "latency_ms": 153
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/686f908a4ed393786ba50382cb01e07f"
+  },
+  {
+    "id": "f19706c278cc430335033e487896bfa3",
+    "name": "chat-turn",
+    "sessionId": "s07",
+    "latency": 0.158,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-17a17f4f",
+      "feature": "qa",
+      "latency_ms": 156
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/f19706c278cc430335033e487896bfa3"
+  },
+  {
+    "id": "bed4bec2bc950387977f23db4f8bacb6",
+    "name": "chat-turn",
+    "sessionId": "s05",
+    "latency": 0.156,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-3a086c60",
+      "feature": "qa",
+      "latency_ms": 155
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/bed4bec2bc950387977f23db4f8bacb6"
+  },
+  {
+    "id": "bfa2ca90b87a6fab446bdb17e56ed761",
+    "name": "chat-turn",
+    "sessionId": "s06",
+    "latency": 0.157,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "summary"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-23151ca6",
+      "feature": "summary",
+      "latency_ms": 154
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/bfa2ca90b87a6fab446bdb17e56ed761"
+  },
+  {
+    "id": "0c0e9193123a004cd4327b3e0ca2c483",
+    "name": "chat-turn",
+    "sessionId": "s04",
+    "latency": 0.157,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-a5b58215",
+      "feature": "qa",
+      "latency_ms": 156
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/0c0e9193123a004cd4327b3e0ca2c483"
+  },
+  {
+    "id": "a4c34557fa3ba7ffd93b3c66c62819e5",
+    "name": "chat-turn",
+    "sessionId": "s03",
+    "latency": 0.157,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "summary"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-c563ed60",
+      "feature": "summary",
+      "latency_ms": 156
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/a4c34557fa3ba7ffd93b3c66c62819e5"
+  },
+  {
+    "id": "59a08a685e0d5c81f8620d579e2c2438",
+    "name": "chat-turn",
+    "sessionId": "s01",
+    "latency": 0.155,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-746cae60",
+      "feature": "qa",
+      "latency_ms": 153
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/59a08a685e0d5c81f8620d579e2c2438"
+  },
+  {
+    "id": "3e4939e860c4b19a040a11097b27bc64",
+    "name": "chat-turn",
+    "sessionId": "s02",
+    "latency": 0.559,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "production",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-cce544c0",
+      "feature": "qa",
+      "latency_ms": 557
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/3e4939e860c4b19a040a11097b27bc64"
+  }
+]

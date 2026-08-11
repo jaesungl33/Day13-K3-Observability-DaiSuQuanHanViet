@@ -1,0 +1,23 @@
+Challenge waterfall (local reconstruction from metrics + logs + code path)
+Challenge ID: day13-k3-observability-v1
+Incident: rag_slow
+Example correlation ID: req-e0057a92
+Feature: refund
+
+Observed end-to-end latency_ms from response_sent: ~2655–2658 ms
+Baseline latency_ms before incident: ~152–154 ms
+Challenge threshold: 2000 ms
+
+Span breakdown (inferred from app/mock_rag.py + app/mock_llm.py + logs):
+1. api.request_received
+2. agent.run / generation
+3. retrieval.retrieve  << anomaly: time.sleep(2.5) when incidents.STATE["rag_slow"] is True
+4. prompt.resolve     (prompt_name=day13-chat, local/langfuse label from env)
+5. llm.generate       (~150 ms fake LLM sleep)
+6. api.response_sent  (latency_ms ≈ retrieval delay + LLM)
+
+Root cause evidence chain:
+- Metrics: /metrics latency_p95 jumped 154 -> 2658 after inject_incident
+- Trace/request IDs: slow refund correlation IDs in challenge_slow_responses.json
+- Logs: feature=refund + latency_ms>2000 on the same correlation IDs
+- Code: app/mock_rag.py enables 2.5s delay only when rag_slow is active

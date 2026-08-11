@@ -1,0 +1,15 @@
+{
+  "service": "api",
+  "payload": {
+    "message_preview": "Explain observability briefly"
+  },
+  "event": "request_received",
+  "user_id_hash": "18f462e7a0c3",
+  "env": "dev",
+  "session_id": "prompt-s-candidate",
+  "model": "claude-sonnet-4-5",
+  "correlation_id": "req-73038fee",
+  "feature": "qa",
+  "level": "info",
+  "ts": "2026-08-11T03:02:40.245743Z"
+}

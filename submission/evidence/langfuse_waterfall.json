@@ -1,0 +1,33 @@
+{
+  "trace_id": "b45c6bf17e03d36e9219b3007f30523f",
+  "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/b45c6bf17e03d36e9219b3007f30523f",
+  "observations": [
+    {
+      "id": "7143f727ffd2a570",
+      "name": "generate-response",
+      "type": "GENERATION",
+      "startTime": "2026-08-11 03:02:33.296000+00:00",
+      "endTime": "2026-08-11 03:02:33.447000+00:00",
+      "model": "claude-sonnet-4-5",
+      "parentObservationId": "60c5ff7ad618e5a9"
+    },
+    {
+      "id": "4f20a7065dd1994d",
+      "name": "retrieve-context",
+      "type": "SPAN",
+      "startTime": "2026-08-11 03:02:30.763000+00:00",
+      "endTime": "2026-08-11 03:02:33.295000+00:00",
+      "model": null,
+      "parentObservationId": "60c5ff7ad618e5a9"
+    },
+    {
+      "id": "60c5ff7ad618e5a9",
+      "name": "chat-turn",
+      "type": "SPAN",
+      "startTime": "2026-08-11 03:02:30.763000+00:00",
+      "endTime": "2026-08-11 03:02:33.449000+00:00",
+      "model": null,
+      "parentObservationId": null
+    }
+  ]
+}

@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import os
 import time
 from dataclasses import dataclass
 
 from . import metrics
+from .logging_config import get_logger
 from .mock_llm import FakeLLM
 from .mock_rag import retrieve
 from .pii import hash_user_id, summarize_text
 from .prompt_management import resolve_prompt
 from .tracing import get_langfuse_client, observe, tracing_enabled
+
+log = get_logger()
 
 
 @dataclass
@@ -26,11 +30,38 @@ class LabAgent:
         self.model = model
         self.llm = FakeLLM(model=model)
 
-    @observe(as_type="generation", capture_input=False, capture_output=False)
-    def run(self, user_id: str, feature: str, session_id: str, message: str) -> AgentResult:
+    @observe(name="chat-turn", as_type="agent", capture_input=False, capture_output=False)
+    def run(
+        self,
+        user_id: str,
+        feature: str,
+        session_id: str,
+        message: str,
+        *,
+        correlation_id: str | None = None,
+    ) -> AgentResult:
         started = time.perf_counter()
-        docs = retrieve(message)
         langfuse_client = get_langfuse_client()
+        safe_message = summarize_text(message)
+
+        langfuse_client.update_current_trace(
+            name="chat-turn",
+            user_id=hash_user_id(user_id),
+            session_id=session_id,
+            tags=["lab", feature, self.model, os.getenv("APP_ENV", "dev")],
+            input={"message": safe_message, "feature": feature},
+            metadata={
+                "feature": feature,
+                "correlation_id": correlation_id,
+                "env": os.getenv("APP_ENV", "dev"),
+            },
+        )
+        langfuse_client.update_current_span(
+            input={"message": safe_message, "feature": feature},
+            metadata={"correlation_id": correlation_id, "model": self.model},
+        )
+
+        docs = retrieve(message)
         prompt = resolve_prompt(
             langfuse_client,
             feature=feature,
@@ -38,39 +69,56 @@ class LabAgent:
             message=message,
             enabled=tracing_enabled(),
         )
-        response = self.llm.generate(prompt.text)
-        quality_score = self._heuristic_quality(message, response.text, docs)
-        latency_ms = int((time.perf_counter() - started) * 1000)
-        cost_usd = self._estimate_cost(response.usage.input_tokens, response.usage.output_tokens)
-
-        langfuse_client.update_current_trace(
-            user_id=hash_user_id(user_id),
-            session_id=session_id,
-            tags=["lab", feature, self.model],
-            metadata={
-                "prompt_name": prompt.name,
-                "prompt_label": prompt.label,
-                "prompt_version": prompt.version,
-                "prompt_source": prompt.source,
-            },
-        )
-        langfuse_client.update_current_generation(
-            model=self.model,
-            metadata={
+        response = self.llm.generate(
+            prompt.text,
+            managed_prompt=prompt.managed_prompt,
+            prompt_metadata={
                 "doc_count": len(docs),
-                "query_preview": summarize_text(message),
+                "query_preview": safe_message,
                 "prompt_name": prompt.name,
                 "prompt_label": prompt.label,
                 "prompt_version": prompt.version,
                 "prompt_source": prompt.source,
                 "prompt_fetch_error": prompt.fetch_error,
             },
-            usage_details={
-                "prompt_tokens": response.usage.input_tokens,
-                "completion_tokens": response.usage.output_tokens,
+        )
+        quality_score = self._heuristic_quality(message, response.text, docs)
+        latency_ms = int((time.perf_counter() - started) * 1000)
+        cost_usd = self._estimate_cost(response.usage.input_tokens, response.usage.output_tokens)
+
+        log.info(
+            "prompt_resolved",
+            service="agent",
+            payload={
+                "prompt_name": prompt.name,
+                "prompt_label": prompt.label,
+                "prompt_version": prompt.version,
+                "prompt_source": prompt.source,
+                "prompt_fetch_error": prompt.fetch_error,
+                "query_preview": safe_message,
             },
-            cost_details={"total": cost_usd},
-            prompt=prompt.managed_prompt,
+        )
+
+        langfuse_client.update_current_trace(
+            output={"answer": summarize_text(response.text), "quality_score": quality_score},
+            metadata={
+                "feature": feature,
+                "correlation_id": correlation_id,
+                "env": os.getenv("APP_ENV", "dev"),
+                "prompt_name": prompt.name,
+                "prompt_label": prompt.label,
+                "prompt_version": prompt.version,
+                "prompt_source": prompt.source,
+                "latency_ms": latency_ms,
+                "quality_score": quality_score,
+            },
+        )
+        langfuse_client.update_current_span(
+            output={
+                "answer": summarize_text(response.text),
+                "latency_ms": latency_ms,
+                "quality_score": quality_score,
+            },
         )
 
         metrics.record_request(
@@ -101,7 +149,9 @@ class LabAgent:
             score += 0.2
         if len(answer) > 40:
             score += 0.1
-        if question.lower().split()[0:1] and any(token in answer.lower() for token in question.lower().split()[:3]):
+        if question.lower().split()[0:1] and any(
+            token in answer.lower() for token in question.lower().split()[:3]
+        ):
             score += 0.1
         if "[REDACTED" in answer:
             score -= 0.2

@@ -1,0 +1,27 @@
+[
+  {
+    "correlation_id": "req-8e185b66",
+    "event": "request_received",
+    "message_preview": "Here is my phone [REDACTED_PHONE_VN], what should be logged?"
+  },
+  {
+    "correlation_id": "req-6210fef8",
+    "event": "request_received",
+    "message_preview": "What is the policy for PII and credit card [REDACTED_CREDIT_CARD]?"
+  },
+  {
+    "correlation_id": "req-746cae60",
+    "event": "request_received",
+    "message_preview": "What is your refund policy? My email is [REDACTED_EMAIL]"
+  },
+  {
+    "correlation_id": "req-3a086c60",
+    "event": "request_received",
+    "message_preview": "Here is my phone [REDACTED_PHONE_VN], what should be logged?"
+  },
+  {
+    "correlation_id": "req-9f53848a",
+    "event": "request_received",
+    "message_preview": "What is the policy for PII and credit card [REDACTED_CREDIT_CARD]?"
+  }
+]

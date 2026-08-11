@@ -1,0 +1,27 @@
+{
+  "challenge_id": "day13-k3-observability-v1",
+  "incident": "rag_slow",
+  "affected_feature": "refund",
+  "latency_threshold_ms": 2000,
+  "slow_correlation_ids": [
+    "req-7ca4d60a",
+    "req-f03cbc5f",
+    "req-8561e237",
+    "req-9cd840d1",
+    "req-78a8bbd5",
+    "req-ccfd74c4",
+    "req-13fa36aa",
+    "req-d02363d2"
+  ],
+  "slow_latency_ms": [
+    2657,
+    2655,
+    2655,
+    2661,
+    2661,
+    2653,
+    2659,
+    2684
+  ],
+  "langfuse_waterfall_trace": "b45c6bf17e03d36e9219b3007f30523f"
+}

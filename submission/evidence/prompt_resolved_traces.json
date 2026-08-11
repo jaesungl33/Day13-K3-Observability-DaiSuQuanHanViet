@@ -1,0 +1,46 @@
+[
+  {
+    "id": "9d0cb651246df3cb623512c10d13e043",
+    "name": "chat-turn",
+    "sessionId": "prompt-s-baseline",
+    "latency": 0.518,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "baseline",
+      "prompt_version": 1,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-14a9cb29",
+      "feature": "qa",
+      "latency_ms": 515
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/9d0cb651246df3cb623512c10d13e043"
+  },
+  {
+    "id": "a910b1f54ec4227699e01e983807c6d0",
+    "name": "chat-turn",
+    "sessionId": "prompt-s-candidate",
+    "latency": 0.786,
+    "tags": [
+      "claude-sonnet-4-5",
+      "dev",
+      "lab",
+      "qa"
+    ],
+    "metadata": {
+      "prompt_name": "day13-chat",
+      "prompt_label": "candidate",
+      "prompt_version": 2,
+      "prompt_source": "langfuse",
+      "correlation_id": "req-73038fee",
+      "feature": "qa",
+      "latency_ms": 784
+    },
+    "htmlPath": "/project/cmso2fnuk003gad0ieel7au46/traces/a910b1f54ec4227699e01e983807c6d0"
+  }
+]

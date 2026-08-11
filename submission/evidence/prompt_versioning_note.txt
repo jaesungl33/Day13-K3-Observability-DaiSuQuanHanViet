@@ -1,0 +1,20 @@
+Prompt versioning evidence (Langfuse managed)
+
+Prompt name: day13-chat
+Created via scripts/setup_langfuse_prompts.py:
+- v1 labels: baseline, production
+- v2 labels: candidate
+
+Same input runs:
+- baseline -> trace 9d0cb651246df3cb623512c10d13e043 prompt_version=1 correlation_id=req-14a9cb29
+- candidate -> trace a910b1f54ec4227699e01e983807c6d0 prompt_version=2 correlation_id=req-73038fee
+
+Label/rollback evidence:
+- production currently points at v1 (baseline)
+- candidate points at v2
+- Switching LANGFUSE_PROMPT_LABEL between baseline and candidate produced distinct prompt_version metadata on real Langfuse traces
+
+UI paths:
+- baseline: /project/cmso2fnuk003gad0ieel7au46/traces/9d0cb651246df3cb623512c10d13e043
+- candidate: /project/cmso2fnuk003gad0ieel7au46/traces/a910b1f54ec4227699e01e983807c6d0
+- waterfall: /project/cmso2fnuk003gad0ieel7au46/traces/b45c6bf17e03d36e9219b3007f30523f

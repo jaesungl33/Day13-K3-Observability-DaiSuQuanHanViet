@@ -1,0 +1,26 @@
+{
+  "scenario": "cost_spike",
+  "before_optimization": {
+    "requests": 5,
+    "total_cost_usd": 0.037851,
+    "avg_cost_usd": 0.00757,
+    "total_tokens_in": 277,
+    "total_tokens_out": 2468,
+    "avg_tokens_out": 493.6,
+    "avg_latency_ms": 342.3
+  },
+  "after_optimization": {
+    "requests": 5,
+    "total_cost_usd": 0.009831,
+    "avg_cost_usd": 0.001966,
+    "total_tokens_in": 277,
+    "total_tokens_out": 600,
+    "avg_tokens_out": 120.0,
+    "avg_latency_ms": 153.0
+  },
+  "savings_summary": {
+    "usd_saved_per_batch": 0.02802,
+    "percentage_cost_reduction": 74.03,
+    "tokens_out_reduced_pct": 75.69
+  }
+}

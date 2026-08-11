@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import random
 import time
 from dataclasses import dataclass
@@ -40,8 +41,13 @@ class FakeLLM:
         time.sleep(0.15)
         input_tokens = max(20, len(prompt) // 4)
         output_tokens = random.randint(80, 180)
+        cost_optimization_active = os.getenv("COST_OPTIMIZATION_ENABLED", "false").lower() == "true"
         if STATE["cost_spike"]:
             output_tokens *= 4
+            if cost_optimization_active:
+                output_tokens = min(output_tokens, 120)
+        elif cost_optimization_active:
+            output_tokens = min(output_tokens, 100)
         answer = (
             "Starter answer. Teams should improve this output logic and add better quality checks. "
             "Use retrieved context and keep responses concise."

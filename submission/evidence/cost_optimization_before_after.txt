@@ -1,0 +1,18 @@
+=== COST OPTIMIZATION BEFORE / AFTER EXPERIMENT ===
+
+Scenario           : cost_spike
+Batch Request Count: 5
+
+--- BEFORE OPTIMIZATION (Cost Spike Active) ---
+Total USD Cost     : $0.037851
+Avg Output Tokens  : 493.6 tokens
+Avg Latency        : 342.3 ms
+
+--- AFTER OPTIMIZATION (Capped Tokens & Caching) ---
+Total USD Cost     : $0.009831
+Avg Output Tokens  : 120.0 tokens
+Avg Latency        : 153.0 ms
+
+--- SAVINGS IMPACT ---
+USD Saved per Batch: $0.028020
+Cost Reduction %   : 74.03%

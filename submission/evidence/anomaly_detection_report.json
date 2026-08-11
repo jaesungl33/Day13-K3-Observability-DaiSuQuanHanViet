@@ -1,0 +1,13 @@
+{
+  "total_log_records": 98,
+  "anomalies_summary": {
+    "pii_leaks": 0,
+    "slo_latency_breaches": 0,
+    "error_events": 0,
+    "cost_spikes": 0
+  },
+  "pii_anomalies": [],
+  "slo_latency_anomalies": [],
+  "error_anomalies": [],
+  "cost_anomalies": []
+}

@@ -4,7 +4,7 @@
 
 - Tên nhóm: Đại Sứ Quán Hàn Việt
 - Repository URL: https://github.com/jaesungl33/Day13-K3-Observability-DaiSuQuanHanViet
-- Commit SHA cuối: _(cập nhật sau khi push)_
+- Commit SHA cuối: 650e18d9385816fbcfb12b85b824ee4d9289455e
 - Lead: Lee Jae Sung
 - Thành viên và vai trò:
 

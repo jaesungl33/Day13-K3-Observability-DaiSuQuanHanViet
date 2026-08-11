@@ -50,6 +50,11 @@ def resolve_prompt(
                 max_retries=0,
             )
             if getattr(managed_prompt, "is_fallback", False):
+                try:
+                    from .logging_config import log_audit_event
+                    log_audit_event("prompt_fallback_triggered", {"name": name, "label": label, "reason": "LangfuseFallback"})
+                except Exception:
+                    pass
                 return ResolvedPrompt(
                     text=text,
                     name=name,
@@ -71,6 +76,11 @@ def resolve_prompt(
                 managed_prompt=managed_prompt,
             )
         except Exception as exc:  # Langfuse là dependency ngoài; app phải có fallback local
+            try:
+                from .logging_config import log_audit_event
+                log_audit_event("prompt_fallback_triggered", {"name": name, "label": label, "reason": type(exc).__name__})
+            except Exception:
+                pass
             return ResolvedPrompt(
                 text=text,
                 name=name,

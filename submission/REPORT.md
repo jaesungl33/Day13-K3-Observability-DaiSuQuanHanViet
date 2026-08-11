@@ -4,7 +4,7 @@
 
 - Tên nhóm: DaiSuQuanHanViet
 - Repository URL: https://github.com/jaesungl33/Day13-K3-Observability-DaiSuQuanHanViet
-- Commit SHA cuối: 46a7b4685808521dbfcb0284a6702505da7ef731
+- Commit SHA nội dung/evidence đã kiểm chứng: eeba0cb93599a3b55e487c020598dd2197abdff6
 - Thành viên và vai trò:
   - **Vũ Đức Duy - 2A202601023 — SRE & Alerts Engineer:** Phụ trách CP2 (Cấu hình Langfuse, thiết lập SLO/Alert Rules, viết tài liệu Alert Runbook).
 

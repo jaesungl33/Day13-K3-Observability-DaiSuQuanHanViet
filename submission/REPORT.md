@@ -81,10 +81,18 @@ Owner chính: **Dương Hoàng Lâm**
 |---|---|---|---|---|---|
 | Lee Jae Sung | Tech Lead / Backend (CP1) | Middleware clear/bind correlation ID; response headers; enrich `user_id_hash`, `session_id`, `feature`, `model`, `env`; PII scrub processor; nền tảng API logging | `app/middleware.py`, `app/main.py`, `app/logging_config.py`, `app/pii.py`, `submission/evidence/correlation_id_sample.json`, `submission/evidence/pii_redaction_samples.json` | `46a7b46`, `32d8988` | Correlation ID phải được bind trước mọi log API, nếu không waterfall Metrics→Logs bị gãy |
 | Vũ Đức Duy | SRE & Alerts (CP2) | Cấu hình Langfuse keys/host; nested tracing + prompt v1/v2; SLO; alert rules; runbook; kiểm chứng evidence Langfuse | `app/tracing.py`, `app/agent.py`, `scripts/setup_langfuse_prompts.py`, `config/slo.yaml`, `config/alert_rules.yaml`, `docs/alerts.md`, `submission/evidence/langfuse_traces.json`, `submission/evidence/prompt_versioning_note.txt` | `eeba0cb`, `2776c8c` | Prompt label/version trên trace giúp rollback an toàn mà không cần đoán từ log thô |
-| Dương Hoàng Lâm | QA & Chief Investigator (CP3) | Dashboard 6 panel + validator; load test baseline/challenge; inject/điều tra incident `rag_slow`; tổng hợp `REPORT.md` và evidence challenge | `config/dashboard.yaml`, `scripts/render_dashboard.py`, `scripts/load_test.py`, `scripts/inject_incident.py`, `submission/evidence/dashboard.png`, `submission/evidence/challenge_*`, `submission/REPORT.md` | Báo cáo nhóm + evidence CP3 trên `main` | P95 và span retrieval chứng minh root cause rõ hơn average latency |
+| Dương Hoàng Lâm | QA & Chief Investigator (CP3) | Dashboard 6 panel + validator; load test baseline/challenge; inject/điều tra incident `rag_slow`; RAG Circuit Breaker; Audit Log; SLO Evaluator; Cost Optimization; CI/CD; tổng hợp `REPORT.md` | `config/dashboard.yaml`, `scripts/render_dashboard.py`, `scripts/load_test.py`, `scripts/inject_incident.py`, `scripts/evaluate_slo.py`, `docs/cost-optimization.md`, `.github/workflows/ci.yml`, `submission/evidence/dashboard.png`, `submission/evidence/challenge_*`, `submission/REPORT.md` | `0ad707b` | P95 và span retrieval chứng minh root cause rõ hơn average latency; RAG Timeout & Audit Log giúp bảo đảm SLO |
 
 ### Checklist bàn giao theo vai trò
 
 1. **CP1 (Lee Jae Sung)** — `python scripts/validate_logs.py` ≥ 80/100; log có correlation ID + enrichment + PII đã redact.
 2. **CP2 (Vũ Đức Duy)** — ≥10 traces Langfuse; prompt baseline/candidate khác version; SLO + 3 alerts + runbook.
-3. **CP3 (Dương Hoàng Lâm)** — dashboard 6/6; challenge Metrics→Traces→Logs; report đầy đủ 3 thành viên.
+3. **CP3 (Dương Hoàng Lâm)** — dashboard 6/6; challenge Metrics→Traces→Logs; report đầy đủ 3 thành viên; Bonus audit log, RAG circuit breaker, SLO evaluator, cost report & CI/CD.
+
+## 8. Hạng mục Bonus (Cải tiến & Tối ưu hóa - CP3)
+
+1. **Audit Log riêng (`data/audit.jsonl`)**: Triển khai logger kiểm toán độc lập ghi nhận các sự kiện bảo mật (PII detected), quản trị (Incident state changed) và hệ thống (Prompt fallback).
+2. **Cost Optimization Report**: Phân tích Before vs After tại [docs/cost-optimization.md](file:///c:/Users/Hi/Documents/GitHub/Day13-K3-Observability-DaiSuQuanHanViet/docs/cost-optimization.md) chứng minh mức giảm **87.6% chi phí USD** và **84.8% tổng token**.
+3. **RAG Timeout & Circuit Breaker**: Triển khai cơ chế Timeout 1.0s và Circuit Breaker trong [app/mock_rag.py](file:///c:/Users/Hi/Documents/GitHub/Day13-K3-Observability-DaiSuQuanHanViet/app/mock_rag.py) đảm bảo P95 Latency ≤ 3000ms.
+4. **CI/CD Automation**: Tự động hóa kiểm tra bằng GitHub Actions workflow [.github/workflows/ci.yml](file:///c:/Users/Hi/Documents/GitHub/Day13-K3-Observability-DaiSuQuanHanViet/.github/workflows/ci.yml).
+5. **Script đánh giá SLO tự động (`scripts/evaluate_slo.py`)**: Đọc log thực tế và đối chiếu tự động với tiêu chuẩn trong `config/slo.yaml`.

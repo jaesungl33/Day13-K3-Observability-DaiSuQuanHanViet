@@ -19,8 +19,17 @@ PII_PATTERNS: dict[str, str] = {
 
 def scrub_text(text: str) -> str:
     safe = text
+    detected = []
     for name, pattern in PII_PATTERNS.items():
-        safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe)
+        if re.search(pattern, safe):
+            detected.append(name)
+            safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe)
+    if detected:
+        try:
+            from .logging_config import log_audit_event
+            log_audit_event("pii_detected_and_redacted", {"patterns": detected, "count": len(detected)})
+        except Exception:
+            pass
     return safe
 
 

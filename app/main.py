@@ -17,7 +17,7 @@ if os.getenv("LANGFUSE_HOST") and not os.getenv("LANGFUSE_BASE_URL"):
 
 from .agent import LabAgent
 from .incidents import disable, enable, status
-from .logging_config import configure_logging, get_logger
+from .logging_config import configure_logging, get_logger, log_audit_event
 from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
@@ -115,6 +115,7 @@ async def enable_incident(name: str) -> JSONResponse:
     try:
         enable(name)
         log.warning("incident_enabled", service="control", payload={"name": name})
+        log_audit_event("incident_state_changed", {"name": name, "state": "enabled"})
         return JSONResponse({"ok": True, "incidents": status()})
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -125,6 +126,7 @@ async def disable_incident(name: str) -> JSONResponse:
     try:
         disable(name)
         log.warning("incident_disabled", service="control", payload={"name": name})
+        log_audit_event("incident_state_changed", {"name": name, "state": "disabled"})
         return JSONResponse({"ok": True, "incidents": status()})
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
